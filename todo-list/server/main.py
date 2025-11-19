@@ -14,6 +14,7 @@ from schemas import (
     UserLogin,
     UserRead,
 )
+from fastapi.middleware.cors import CORSMiddleware
 from security import create_access_token, decode_access_token
 from sqlalchemy.orm import Session
 from usecases import (
@@ -30,7 +31,14 @@ from usecases import (
 app = FastAPI(title="Todo List API", version="2.0.0")
 http_bearer = HTTPBearer()
 
-
+from fastapi.middleware.cors import CORSMiddleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 def get_db():
     db = SessionLocal()
     try:
